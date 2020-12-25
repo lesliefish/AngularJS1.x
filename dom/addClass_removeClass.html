@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>addClass</title>
+    <style type="text/css">
+        .class1 {
+            color: #f00;
+            font-weight: bold;
+            font-size: large;
+            background-color: white;
+        }
+
+        .class2 {
+            border: 3px solid red;
+            color: maroon;
+        }
+    </style>
+</head>
+
+<body>
+    <div ng-app="app">
+        <div ng-controller="AppController">
+            <span id="span1" class="class1">addClass And removeClass</span>
+        </div>
+    </div>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('app', []);
+        app.controller('AppController', ['$scope', function ($scope) {
+
+            setInterval(() => {
+                angular.element("#span1").addClass('class2');
+            }, 500);
+
+            setInterval(() => {
+                angular.element("#span1").removeClass('class2');
+            }, 2000);
+        }]);
+    </script>
+</body>
+
+</html>
