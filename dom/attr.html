@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>attr</title>
+    <style type="text/css">
+        .area {
+            border: 1px solid green;
+        }
+
+        #ele {
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: red;
+            color: white;
+        }
+    </style>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-app="app">
+        <div ng-controller="AppController">
+            <h2>attr</h2>
+            <div>
+                <button id="btn1" ng-click="onBtn1()">attr test</button>
+            </div>
+
+            <div class="area">
+                <p id="ele">元素A</p>
+            </div>
+            <img id="myImg" src="1.jpg" />
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var app = angular.module('app', []);
+        app.controller('AppController', function ($scope, $compile) {
+            $scope.onBtn1 = function () {
+                var aAttrs = angular.element("#ele")[0].attributes;
+                console.log(aAttrs);
+
+                // attr调用后的length
+                console.log(angular.element("#myImg")[0].attributes);
+                // 设置图片宽度
+                angular.element("#myImg").attr("width", "180");
+                console.log(angular.element("#myImg")[0].attributes);
+                // 设置图片高度
+                angular.element("#myImg").attr("height", "180");
+                console.log(angular.element("#myImg")[0].attributes);
+
+                /*
+                打印信息
+                NamedNodeMap {0: id, id: id, length: 1}
+                NamedNodeMap {0: id, 1: src, id: id, src: src, length: 2}
+                NamedNodeMap {0: id, 1: src, 2: width, id: id, src: src, width: width, length: 3}
+                NamedNodeMap {0: id, 1: src, 2: width, 3: height, id: id, src: src, width: width, height: height, length: 4}
+                */
+            }
+        });
+    </script>
+</body>
+
+</html>
