@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>after and before</title>
+    <style type="text/css">
+    .area{
+        border: 1px solid green;
+    }
+    </style>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-app="app">
+        <div ng-controller="AppController">
+            <h2>通过before和after添加元素</h2>
+            <div>
+                <button id="btn1" ng-click="onBtn1()">通过before添加元素</button>
+                <button id="btn2" ng-click="onBtn2()">通过after添加元素</button>
+            </div>
+
+            <div class="area" >
+                <p id="ele">元素A</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var app = angular.module('app', []);
+        app.controller('AppController', ['$scope', function ($scope) {
+            $scope.onBtn1 = function () {
+                angular.element("#ele").before('<p>before添加的元素</p>');
+            }
+            $scope.onBtn2 = function () {
+                angular.element("#ele").after('<p>after添加的元素</p>');
+            }
+        }]);
+    </script>
+</body>
+
+</html>
