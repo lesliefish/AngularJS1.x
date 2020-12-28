@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>append and remove</title>
+    <style type="text/css">
+        .area {
+            border: 1px solid green;
+        }
+
+        #ele {
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: red;
+            color: white;
+        }
+    </style>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-app="app">
+        <div ng-controller="AppController">
+            <h2>通过append添加元素、prepend添加元素、remove删除元素</h2>
+            <div>
+                <button id="btn1" ng-click="onBtn1()">通过append元素后添加元素</button>
+                <button id="btn2" ng-click="onBtn2()">通过prepend元素前添加元素</button>
+            </div>
+
+            <div class="area">
+                <p id="ele">元素A</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var app = angular.module('app', []);
+        app.controller('AppController', function ($scope, $compile) {
+            $scope.onBtn1 = function () {
+                var newEle = angular.element('<button class="appendBtn" ng-click="onTest(\'append\')">通过append添加的元素</button>');
+                $compile(newEle)($scope);
+                angular.element("#ele").append(newEle); // 在ele元素后添加元素
+            }
+
+            $scope.onTest = function (szType) {
+                alert("I am an " + szType + " element");
+                angular.element("." + szType + "Btn").remove(); // 删除类为appendBtn/prependBtn的元素
+            }
+
+            $scope.onBtn2 = function () {
+                var newEle = angular.element('<button class="prependBtn" ng-click="onTest(\'prepend\')">通过prepend添加的元素</button>');
+                $compile(newEle)($scope);
+                angular.element("#ele").prepend(newEle); // 在ele元素前添加元素
+            }
+        });
+    </script>
+</body>
+
+</html>
