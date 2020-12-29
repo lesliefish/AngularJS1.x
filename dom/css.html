@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>css</title>
+    <style type="text/css">
+        .area {
+            border: 1px solid green;
+        }
+
+        #ele {
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: red;
+            color: white;
+            font-size: 18px;
+        }
+    </style>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-app="app">
+        <div ng-controller="AppController">
+            <h2>css</h2>
+            <div>
+                <button id="btn1" ng-click="onBtn1()">just do it</button>
+            </div>
+
+            <div class="area" id="area">
+                <div id="ele" style="background-image: url(./1.jpg);">
+                    <button id='btn'>hai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var app = angular.module('app', []);
+        app.controller('AppController', function ($scope, $compile) {
+            $scope.onBtn1 = function () {
+                // get
+                var v1 = angular.element("#ele").css("background-color");
+                var v2 = angular.element("#ele").css("width");
+                var v3 = angular.element("#ele").css("height");
+                var v4 = angular.element("#ele").css("color");
+                var v5 = angular.element("#ele").css("font-size");
+                var v6 = angular.element("#ele").css("background-image");
+
+                // set
+                angular.element("#ele").css("height", "800px");
+            }
+        });
+    </script>
+</body>
+
+</html>
