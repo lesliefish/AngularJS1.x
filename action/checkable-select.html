@@ -1,0 +1,141 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+
+</head>
+
+<body>
+
+    <div ng-app="myApp" class="main" ng-controller="myCtrl">
+        <div class="select_box" id="selected">
+            <div class="select  " ng-click="open()">
+                <span ng-bind="value"></span>
+            </div>
+            <ul class="list " ng-show="bShowList">
+                <li ng-repeat="item in list" ng-click="close($index)"> <input type="checkbox" ng-mode="item.checked">
+                    <span ng-bind="item.name"></span> </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+            $scope.list = [
+                { name: '1', checked: false }, { name: '2', checked: false }, { name: '3', checked: false }, { name: '4', checked: false }
+            ]
+            $scope.bShowList = false;
+            $scope.value = '请选择';
+            $scope.open = function () {
+                $scope.bShowList = true;
+                $scope.$apply();
+            }
+            $scope.close = function (index) {
+                $scope.value = $scope.list[index].name;
+                $scope.bShowList = false;
+            }
+            // $(".select").click(function () {
+            //     $(".list").show();
+            // })
+            // $(".list li").click(function () {
+            //     $(".select span").html($(this).html());
+            //     $(".list").hide();
+            // })
+            // $(document).bind("click", function (e) {
+            //     var e = e || window.event; //事件对象，兼容IE
+            //     var target = e.target || e.srcElement; //源对象，兼容火狐和IE
+            //     while (target) {
+            //         if (target.id && target.id == "selected") { //循环判断至根节点，防止点击的是#selected和它的子元素
+            //             return;
+            //         }
+            //         target = target.parentNode;
+            //     }
+            //     $(".list").hide(); //点击的不是#selected和它的子元素，隐藏下拉菜单
+            // })
+        });
+    </script>
+
+    <style>
+        .main {
+            width: 800px;
+            height: 400px;
+            background-color: aliceblue;
+        }
+
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        ul,
+        ol {
+            list-style: none
+        }
+
+        .select_box {
+            position: relative;
+            margin: 100px auto;
+            width: 300px;
+        }
+
+        .select {
+            padding: 5px 10px;
+            border: 1px solid #dedede;
+        }
+
+        .select:hover {
+            cursor: pointer;
+        }
+
+        .select span {
+            display: block;
+        }
+
+        .list {
+            position: absolute;
+            top: 30px;
+            width: 298px;
+            border: 1px solid #dedede;
+            border-top: none;
+        }
+
+        .list li {
+            padding: 5px 10px;
+        }
+
+        .list li:hover {
+            background: #ddd;
+        }
+    </style>
+
+    <!-- <script>
+        $(function () {
+            $(".select").click(function () {
+                $(".list").show();
+            })
+            $(".list li").click(function () {
+                $(".select span").html($(this).html());
+                $(".list").hide();
+            })
+            $(document).bind("click", function (e) {
+                var e = e || window.event; //事件对象，兼容IE
+                var target = e.target || e.srcElement; //源对象，兼容火狐和IE
+                while (target) {
+                    if (target.id && target.id == "selected") { //循环判断至根节点，防止点击的是#selected和它的子元素
+                        return;
+                    }
+                    target = target.parentNode;
+                }
+                $(".list").hide(); //点击的不是#selected和它的子元素，隐藏下拉菜单
+            })
+        })
+    </script> -->
+</body>
+
+
+</html>
