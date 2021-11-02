@@ -12,14 +12,31 @@
 <body>
 
     <div ng-app="myApp" class="main" ng-controller="myCtrl">
-        <div class="select_box" id="selected">
-            <div class="select  " ng-click="open()">
+        <div style="float: left;" class="select_box" id="selected">
+            <div class="select" ng-click="open()">
                 <span ng-bind="value"></span>
             </div>
-            <ul class="list " ng-show="bShowList">
-                <li ng-repeat="item in list" ng-click="close($index)"> <input type="checkbox" ng-mode="item.checked">
-                    <span ng-bind="item.name"></span> </li>
+            <ul class="list" ng-show="bShowList">
+                <li ng-repeat="item in list"> <input type="checkbox" ng-model="item.checked"
+                        id="{{'channel' + item.id}}">
+                    <label for="{{'channel' + item.id}}" ng-bind="item.name"></label>
+                </li>
             </ul>
+        </div>
+
+
+        <div style="float: left;">
+            <div class="select_box" id="selected">
+                <div class="select" ng-click="open()">
+                    <span ng-bind="value"></span>
+                </div>
+                <ul class="list" ng-show="bShowList">
+                    <li ng-repeat="item in list" ng-click='item.checked = !item.checked'> <input type="checkbox"
+                            ng-model="item.checked" id="{{'channel' + item.id}}">
+                        <label for="{{item + 'channel'}}" ng-bind="item.name"></label>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -27,18 +44,48 @@
         var app = angular.module('myApp', []);
         app.controller('myCtrl', function ($scope) {
             $scope.list = [
-                { name: '1', checked: false }, { name: '2', checked: false }, { name: '3', checked: false }, { name: '4', checked: false }
-            ]
+                { id: 1, name: '1', checked: false },
+                { id: 23, name: '22', checked: false },
+                { id: 44, name: '333', checked: false },
+                { id: 55, name: '4444', checked: false }
+            ];
             $scope.bShowList = false;
             $scope.value = '请选择';
             $scope.open = function () {
-                $scope.bShowList = true;
-                $scope.$apply();
+                $scope.bShowList = !$scope.bShowList;
+                // $scope.$apply();
             }
+
+            $scope.$watch('list', function (to) {
+                $scope.value = '';
+                for (var i = 0; i < $scope.list.length; ++i) {
+                    if ($scope.list[i].checked) {
+                        $scope.value += $scope.list[i].name + ',';
+                    }
+                }
+                if ($scope.value) {
+                    $scope.value = $scope.value.substr(0, $scope.value.length - 1);
+                } else {
+                    $scope.value = '请选择'
+                }
+            }, true);
+
             $scope.close = function (index) {
-                $scope.value = $scope.list[index].name;
-                $scope.bShowList = false;
+
+                // $scope.bShowList = false;
             }
+            document.addEventListener("click", function (e) {
+                var e = e || window.event; //事件对象，兼容IE
+                var target = e.target || e.srcElement; //源对象，兼容火狐和IE
+                while (target) {
+                    if (target.id && target.id == "selected") { //循环判断至根节点，防止点击的是#selected和它的子元素
+                        return;
+                    }
+                    target = target.parentNode;
+                }
+                $scope.bShowList = false;
+                $scope.$apply();
+            });
             // $(".select").click(function () {
             //     $(".list").show();
             // })
@@ -79,7 +126,7 @@
 
         .select_box {
             position: relative;
-            margin: 100px auto;
+            /* margin: 100px auto; */
             width: 300px;
         }
 
@@ -110,6 +157,7 @@
 
         .list li:hover {
             background: #ddd;
+            cursor: pointer;
         }
     </style>
 
